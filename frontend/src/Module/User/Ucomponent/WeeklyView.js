@@ -47,7 +47,8 @@ const WeeklyView = () => {
         token: localStorage.getItem('token')
       });
       
-      const response = await axios.get(`http://localhost:5000/api/workouts/range?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const response = await axios.get(`${apiUrl}/api/workouts/range?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`);
       console.log('Fetched workouts:', response.data);
       setWorkouts(response.data);
     } catch (error) {
@@ -62,7 +63,8 @@ const WeeklyView = () => {
   const handleDeleteWorkout = async (workoutId) => {
     if (window.confirm('Are you sure you want to delete this workout?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/workouts/${workoutId}`);
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        await axios.delete(`${apiUrl}/api/workouts/${workoutId}`);
         fetchWeeklyWorkouts(); // Refresh the data
       } catch (error) {
         setError('Failed to delete workout');

@@ -152,7 +152,8 @@ const AddWorkout = () => {
         }))
       };
 
-      await axios.post('http://localhost:5000/api/workouts', workoutToSave);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      await axios.post(`${apiUrl}/api/workouts`, workoutToSave);
       navigate('/dashboard');
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to save workout');

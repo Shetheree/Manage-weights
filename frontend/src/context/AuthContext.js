@@ -30,7 +30,8 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5000/api/auth/profile');
+          const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+          const response = await axios.get(`${apiUrl}/api/auth/profile`);
           setUser(response.data);
         } catch (error) {
           console.error('Auth check failed:', error);
@@ -45,7 +46,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const response = await axios.post(`${apiUrl}/api/auth/login`, {
         email,
         password
       });
@@ -67,7 +69,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (username, email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const response = await axios.post(`${apiUrl}/api/auth/register`, {
         username,
         email,
         password

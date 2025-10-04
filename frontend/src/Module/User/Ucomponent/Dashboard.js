@@ -32,7 +32,8 @@ const Dashboard = () => {
 
   const fetchWorkouts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/workouts');
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const response = await axios.get(`${apiUrl}/api/workouts`);
       setWorkouts(response.data);
     } catch (error) {
       setError('Failed to load workouts');
@@ -45,7 +46,8 @@ const Dashboard = () => {
   const handleDeleteWorkout = async (workoutId) => {
     if (window.confirm('Are you sure you want to delete this workout?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/workouts/${workoutId}`);
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        await axios.delete(`${apiUrl}/api/workouts/${workoutId}`);
         setWorkouts(workouts.filter(workout => workout._id !== workoutId));
       } catch (error) {
         setError('Failed to delete workout');

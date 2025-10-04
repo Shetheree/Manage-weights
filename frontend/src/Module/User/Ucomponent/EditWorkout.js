@@ -32,7 +32,8 @@ const EditWorkout = () => {
 
   const fetchWorkout = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/workouts/${id}`);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const response = await axios.get(`${apiUrl}/api/workouts/${id}`);
       const workout = response.data;
       
       setWorkoutData({
@@ -169,7 +170,8 @@ const EditWorkout = () => {
         }))
       };
 
-      await axios.put(`http://localhost:5000/api/workouts/${id}`, workoutToSave);
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      await axios.put(`${apiUrl}/api/workouts/${id}`, workoutToSave);
       navigate('/dashboard');
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to update workout');
