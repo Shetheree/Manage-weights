@@ -21,10 +21,8 @@ services:
         value: https://weights-tracker-frontend.onrender.com
 
   # Frontend Service
-  - type: web
+  - type: static
     name: weights-tracker-frontend
-    env: static
-    plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/build
     envVars:
