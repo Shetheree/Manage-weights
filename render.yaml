@@ -34,4 +34,4 @@ services:
 databases:
   - name: weights-tracker-db
     plan: free
-    databaseName: weights-tracker
+    databaseName: weightstracker
