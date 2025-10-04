@@ -1,0 +1,37 @@
+services:
+  # Backend Service
+  - type: web
+    name: weights-tracker-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: weights-tracker-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 10000
+      - key: CLIENT_URL
+        value: https://weights-tracker-frontend.onrender.com
+
+  # Frontend Service
+  - type: web
+    name: weights-tracker-frontend
+    env: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://weights-tracker-backend.onrender.com
+
+databases:
+  - name: weights-tracker-db
+    plan: free
+    databaseName: weights-tracker
